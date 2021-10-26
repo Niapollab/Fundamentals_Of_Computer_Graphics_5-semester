@@ -3,6 +3,9 @@
 #include "Sight.h"
 
 LRESULT _stdcall WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);						// прототип оконной процедуры
+
+void ChangeScale(Figure& figure, LPARAM& lParam, WPARAM& wParam);
+
 int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)		// основная процедура
 {
 	// Первая составляющая часть основной процедуры - создание окна: сначала описывается оконный класс wc, затем создается окно hWnd
@@ -23,15 +26,15 @@ int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		(LPCSTR)"MainWindowClass",					// имя оконного класса
 		(LPCSTR)"Figure Viewer",					// заголовок окна
 		WS_OVERLAPPEDWINDOW,						// стиль окна
-		200,200,400,400,							// координаты на экране левого верхнего угла окна, его ширина и высота
-		nullptr,nullptr,hInstance,nullptr);
+		200, 200, 400, 400,							// координаты на экране левого верхнего угла окна, его ширина и высота
+		nullptr, nullptr, hInstance, nullptr);
 
-	ShowWindow(hWnd,nCmdShow);
+	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
 	// Вторая составляющая часть основной процедуры - основной цикл обработки системных сообщений, который ожидает сообщения и рассылает их соответствующим окнам
 	MSG msg;
-	while(GetMessage(&msg,nullptr,0,0))				// функция GetMessage выбирает из очереди сообщение и заносит его в структуру msg
+	while (GetMessage(&msg, nullptr, 0, 0))				// функция GetMessage выбирает из очереди сообщение и заносит его в структуру msg
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);						// функция DispatchMessage оповещает систему о необходимости вызова оконной процедуры
@@ -46,74 +49,99 @@ Sight sight(30);
 
 LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// оконная процедура принимает и обрабатывает все сообщения, отправленные окну
 {
-	switch(msg)
+	switch (msg)
 	{
 	case WM_PAINT:						// системное сообщение WM_PAINT генерируется всякий раз, когда требуется отрисовка или перерисовка изображения
-		{
-			HDC dc = GetDC(hWnd);		// функция GetDC возвращает контекст устройства, в котором хранится информация о том, в какое окно производится вывод, каковы размеры рабочей области окна hWnd, в какой точке экрана находится начало координат рабочей области и т.п.
-			sight.Clear(dc);
-			sight.Draw(dc);
-			ReleaseDC(hWnd, dc);		// функция ReleaseDC сообщает системе, что связанный с окном hWnd контекст dc больше не нужен
-			return DefWindowProc(hWnd, msg, wParam, lParam);
-		}
+	{
+		HDC dc = GetDC(hWnd);		// функция GetDC возвращает контекст устройства, в котором хранится информация о том, в какое окно производится вывод, каковы размеры рабочей области окна hWnd, в какой точке экрана находится начало координат рабочей области и т.п.
+		sight.Clear(dc);
+		sight.Draw(dc);
+		ReleaseDC(hWnd, dc);		// функция ReleaseDC сообщает системе, что связанный с окном hWnd контекст dc больше не нужен
+		return DefWindowProc(hWnd, msg, wParam, lParam);
+	}
 	case WM_KEYDOWN:
+	{
+		switch (wParam)
 		{
-			switch (wParam)
-			{
-			case VK_LEFT:
-				{
-					sight.Move(-2, 0);
-					break;
-				}
-			case VK_RIGHT:
-				{
-					sight.Move(2, 0);
-					break;
-				}
-			/* ... */
-			}
-			InvalidateRect(hWnd, nullptr, false);
-			return 0;
+		case VK_LEFT:
+		{
+			sight.Move(-2, 0);
+			break;
 		}
+		case VK_RIGHT:
+		{
+			sight.Move(2, 0);
+			break;
+		}
+		case VK_UP:
+		{
+			sight.Move(0, -2);
+			break;
+		}
+		case VK_DOWN:
+		{
+			sight.Move(0, 2);
+			break;
+		}
+		}
+		InvalidateRect(hWnd, nullptr, false);
+		return 0;
+	}
+	case WM_MOUSEWHEEL:
+	{
+		ChangeScale(sight, lParam, wParam);
+		InvalidateRect(hWnd, nullptr, false);
+		return 0;
+	}
 	case WM_RBUTTONDOWN:
-		{
-			sight.MoveTo(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			InvalidateRect(hWnd, nullptr, false);
-			return 0;
-		}
+	{
+		sight.MoveTo(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		InvalidateRect(hWnd, nullptr, false);
+		return 0;
+	}
 	case WM_LBUTTONDOWN:
-		{
-			sight.StartDragging(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			return 0;
-		}
+	{
+		sight.StartDragging(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		return 0;
+	}
 	case WM_MOUSEMOVE:
+	{
+		if (sight.IsDragging())
 		{
-			if (sight.IsDragging())
-			{
-				sight.Drag(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				InvalidateRect(hWnd, nullptr, false);
-			}
-			return 0;
+			sight.Drag(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			InvalidateRect(hWnd, nullptr, false);
 		}
+		return 0;
+	}
 	case WM_LBUTTONUP:
-		{
-			sight.StopDragging();
-			return 0;
-		}
+	{
+		sight.StopDragging();
+		return 0;
+	}
 	case WM_SIZE:
-		{
-			InvalidateRect(hWnd, nullptr, false);	// функция InvalidateRect объявляет рабочую область окна hWnd требующей перерисовки, в результате чего генерируется системное сообщение WM_PAINT
-			return 0;								// Таким образом мы добиваемся того, что перерисовка происходит и при уменьшении размеров окна
-		}
+	{
+		InvalidateRect(hWnd, nullptr, false);	// функция InvalidateRect объявляет рабочую область окна hWnd требующей перерисовки, в результате чего генерируется системное сообщение WM_PAINT
+		return 0;								// Таким образом мы добиваемся того, что перерисовка происходит и при уменьшении размеров окна
+	}
 	case WM_DESTROY:
-		{
-			PostQuitMessage(0);
-			return 0;
-		}
+	{
+		PostQuitMessage(0);
+		return 0;
+	}
 	default:
-		{
-			return DefWindowProc(hWnd, msg, wParam, lParam);
-		}
+	{
+		return DefWindowProc(hWnd, msg, wParam, lParam);
+	}
 	}
 	return 0;
+}
+
+void ChangeScale(Figure& figure, LPARAM& lParam, WPARAM& wParam)
+{
+	int x = GET_X_LPARAM(lParam);
+	int y = GET_Y_LPARAM(lParam);
+	short wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+
+	int oldSize = figure.GetSize();
+	figure.Resize(oldSize + (wheelDelta / 4));
 }
