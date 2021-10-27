@@ -65,10 +65,12 @@
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FigureViewer.cpp" />
     <ClCompile Include="Sight.cpp" />
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Sight.h" />
+    <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
