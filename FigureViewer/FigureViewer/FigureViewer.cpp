@@ -5,7 +5,7 @@
 
 // В основном модуле объявляется только одна глобальная переменная - создаётся объект класса Sight
 // Все дальнейшие действия осуществляются посредством обращения к методам, реализованным в этом классе
-Figure& figure = *(new Triangle(30));
+Figure& figure = *(new Triangle(60));
 
 LRESULT _stdcall WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);						// прототип оконной процедуры
 
