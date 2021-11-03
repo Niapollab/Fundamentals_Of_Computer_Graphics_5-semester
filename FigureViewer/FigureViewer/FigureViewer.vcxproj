@@ -66,12 +66,14 @@
     <ClCompile Include="FigureViewer.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Sight.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Sight.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
