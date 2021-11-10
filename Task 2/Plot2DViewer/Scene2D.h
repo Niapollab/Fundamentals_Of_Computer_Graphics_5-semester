@@ -1,25 +1,13 @@
-#ifndef SCENE_2D_H
-#define SCENE_2D_H
-
+#pragma once
 #include "Camera2D.h"
 
 class Scene2D : public Camera2D
 {
 private:
 	typedef double (*Func)(double);
+
 public:
-	Scene2D(double X0, double Y0, double px, double py) : Camera2D(X0, Y0, px, py)
-	{
-	}
-	void Plot(HDC dc, Func f, bool axes=true)
-	{
-		if (axes)
-			Axes(dc);
+	Scene2D(HWND window, double X0, double Y0, double px, double py);
 
-		// Построение графика функции f
-		// Здесь передаваемая в качестве параметра функция f вызывается как обычная функция:
-		// f(x);
-	}
+	void Plot(Func f, bool axes = true);
 };
-
-#endif SCENE_2D_H
