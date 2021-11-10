@@ -141,10 +141,8 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 
 void ChangeScale(Figure& figure, LPARAM& lParam, WPARAM& wParam)
 {
-	int x = GET_X_LPARAM(lParam);
-	int y = GET_Y_LPARAM(lParam);
 	short wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 
 	int oldSize = figure.GetSize();
-	figure.Resize(oldSize + (wheelDelta / 4));
+	figure.Resize(oldSize + (wheelDelta >= 0 ? 1 : -1));
 }
