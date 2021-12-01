@@ -1,16 +1,12 @@
 #pragma once
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 
 // Исходные значения параметров X0, Y0, px, py
-double X0 = 200, Y0 = 200, px = 50, py = 100;
+const double X0 = 200, Y0 = 200, px = 50, py = 100, FI_MIN = 0, FI_MAX = 2 * M_PI;
 
-double Parabola(double x)
-{
-	return x * x - 2;
-}
+double Parabola(double x);
 
-double Sinusoid(double x)
-{
-	return sin(x);
-}
+double Sinusoid(double x);
+
+double ArchimedSpiral(double x);

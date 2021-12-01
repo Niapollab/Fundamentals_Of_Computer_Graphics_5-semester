@@ -8,4 +8,6 @@ public:
 	Scene2D(HWND window, double X0, double Y0, double px, double py);
 
 	void Plot(const std::function<double(double)>& func, bool axes = true);
+
+	void PolarPlot(const std::function<double(double)>& polarFunc, bool axes = true);
 };

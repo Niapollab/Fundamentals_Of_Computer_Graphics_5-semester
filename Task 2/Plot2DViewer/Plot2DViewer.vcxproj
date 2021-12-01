@@ -63,6 +63,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera2D.cpp" />
+    <ClCompile Include="Data.cpp" />
     <ClCompile Include="Plot2DViewer.cpp" />
     <ClCompile Include="Scene2D.cpp" />
   </ItemGroup>

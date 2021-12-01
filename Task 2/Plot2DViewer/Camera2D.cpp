@@ -121,3 +121,8 @@ int Camera2D::GetScreenWindowHeight() const
 	RECT rect = GetDCRect();
 	return rect.bottom - rect.top;
 }
+
+std::pair<double, double> Camera2D::ConvertPolarPointToCartesian(double angle, double length)
+{
+	return { cos(angle) * length, sin(angle) * length };
+}

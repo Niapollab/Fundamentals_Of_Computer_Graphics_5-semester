@@ -60,7 +60,7 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 	case WM_PAINT:
 	{
 		scene->Clear();				// Вызов реализованного в классе Camera2D метода, отвечающего за очистку рабочей области окна hWnd
-		scene->Plot(Sinusoid);		// Вызов реализованного в классе Scene2D метода, отвечающего за отрисовку графика синусоиды
+		scene->PolarPlot(ArchimedSpiral);		// Вызов реализованного в классе Scene2D метода, отвечающего за отрисовку графика синусоиды
 		ReleaseDC(hWnd, scene->GetDC());
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}

@@ -26,6 +26,9 @@ public:
 	// ќтрисовка координатных осей
 	void Axes();
 
+	// ќтображает точку пол€рного пространства в ƒекартово
+	std::pair<double, double> ConvertPolarPointToCartesian(double angle, double length);
+
 protected:
 	// Ёкранные координаты начала мировой системы координат
 	double X0, Y0;
