@@ -1,7 +1,12 @@
 #include "Scene2D.h"
 
-Scene2D::Scene2D(HWND window, double X0, double Y0, double px, double py) : Camera2D(window, X0, Y0, px, py)
+Scene2D::Scene2D(HWND window, double X0, double Y0, double px, double py, Model2D model) : Camera2D(window, X0, Y0, px, py), model(model)
 {
+}
+
+Model2D& Scene2D::GetModel()
+{
+	return model;
 }
 
 void Scene2D::Plot(Func func, bool axes)
@@ -16,4 +21,9 @@ void Scene2D::Plot(Func func, bool axes)
 		double yf = func(ScreenToWorldX(xf));
 		LineTo(ScreenToWorldX(xf), yf);
 	}
+}
+
+void Scene2D::Render()
+{
+
 }
