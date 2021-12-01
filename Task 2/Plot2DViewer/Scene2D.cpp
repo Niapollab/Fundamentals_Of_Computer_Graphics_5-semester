@@ -4,7 +4,7 @@ Scene2D::Scene2D(HWND window, double X0, double Y0, double px, double py) : Came
 {
 }
 
-void Scene2D::Plot(Func func, bool axes)
+void Scene2D::Plot(const std::function<double(double)>& func, bool axes)
 {
 	if (axes)
 		Axes();
