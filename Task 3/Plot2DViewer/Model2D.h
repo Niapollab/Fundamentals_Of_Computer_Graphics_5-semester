@@ -9,17 +9,13 @@ class Model2D
 private:
 	Matrix<double> vertices;
 	Matrix<int> edges;
-	Matrix<double> comulative_at;
-	Matrix<double> initial_vertices;
 
 public:
 	Model2D();
-	Model2D(const Matrix<double>& Vertices, const Matrix<int>& Edges);
-	Model2D(const std::string& input_filename, const std::string& output_filename);
+	Model2D(const Matrix<double>& vertices, const Matrix<int>& edges);
 
-	Matrix<double> GetVertices();
-	Matrix<int> GetEdges();
-	double GetVertexX(int p);
-	double GetVertexY(int p);
-	void Apply(const Matrix<double>& T);
+	const Matrix<double>& GetVertices() const;
+	const Matrix<int>& GetEdges() const;
+	std::pair<double, double> GetVertex(const int index) const;
+	Model2D& Apply(const Matrix<double>& T);
 };

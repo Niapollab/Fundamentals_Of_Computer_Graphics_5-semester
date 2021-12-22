@@ -19,6 +19,8 @@ double					// Исходные значения параметров L, R, B, T
 	T = 10.5,
 	speed = 0.4;
 
+double X0 = 200, Y0 = 200, px = 50, py = 50;
+
 bool dragging = false;
 
 double Parabola(double x)

@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <initializer_list>
 #include <stdexcept>
 #include "MatrixRow.h"
@@ -16,6 +17,7 @@ private:
 public:
 	Matrix() noexcept;
 	Matrix(const std::initializer_list<const std::initializer_list<const T>>& list);
+	Matrix(const std::vector<const std::vector<const T>>& list);
 	Matrix(const size_t rows_size, const size_t columns_size);
 	Matrix(const Matrix& matrix) noexcept;
 	Matrix(Matrix&& matrix) noexcept;
@@ -43,6 +45,25 @@ Matrix<T>::Matrix() noexcept
 
 template<class T>
 Matrix<T>::Matrix(const std::initializer_list<const std::initializer_list<const T>>& list)
+{
+	if (!all_initializer_list_sizes_equals(list))
+		throw std::invalid_argument("Initializer lists must have equals sizes.");
+
+	rows_size = list.size();
+	if (rows_size > 0)
+		columns_size = list.begin()->size();
+	else
+		columns_size = 0;
+
+	raw_matrix = new MatrixRow<T>[rows_size];
+
+	size_t index = 0;
+	for (auto sublist : list)
+		raw_matrix[index++] = MatrixRow<T>(sublist);
+}
+
+template<class T>
+Matrix<T>::Matrix(const std::vector<const std::vector<const T>>& list)
 {
 	if (!all_initializer_list_sizes_equals(list))
 		throw std::invalid_argument("Initializer lists must have equals sizes.");

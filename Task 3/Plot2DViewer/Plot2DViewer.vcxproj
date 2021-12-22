@@ -65,6 +65,7 @@
   <ItemGroup>
     <ClCompile Include="AffineTransform.cpp" />
     <ClCompile Include="Camera2D.cpp" />
+    <ClCompile Include="FileModelReader.cpp" />
     <ClCompile Include="Model2D.cpp" />
     <ClCompile Include="Plot2DViewer.cpp" />
     <ClCompile Include="Scene2D.cpp" />
@@ -73,6 +74,9 @@
     <ClInclude Include="AffineTransform.h" />
     <ClInclude Include="Camera2D.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="FileModelReader.h" />
+    <ClInclude Include="IModelReader.h" />
+    <ClInclude Include="IModelWriter.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MatrixRow.h" />
     <ClInclude Include="Model2D.h" />

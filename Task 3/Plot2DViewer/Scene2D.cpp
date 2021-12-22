@@ -25,5 +25,20 @@ void Scene2D::Plot(Func func, bool axes)
 
 void Scene2D::Render()
 {
+	const Matrix<int>& edges = model.GetEdges();
+	const Matrix<double>& vertices = model.GetVertices();
 
+	for (int i = 0; i < vertices.get_columns_size(); ++i)
+	{
+		for (int j = i + 1; j < vertices.get_columns_size(); ++j)
+		{
+			if (edges[i][j])
+			{
+				auto fpoint = model.GetVertex(i);
+				auto spoint = model.GetVertex(j);
+				MoveTo(fpoint.first, fpoint.second);
+				LineTo(spoint.first, spoint.second);
+			}
+		}
+	}
 }

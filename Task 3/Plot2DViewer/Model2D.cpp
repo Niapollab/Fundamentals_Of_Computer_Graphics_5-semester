@@ -1,41 +1,33 @@
 #include "Model2D.h"
 
-Model2D::Model2D() : vertices(), edges(), comulative_at(Identity()), initial_vertices(vertices) 
+Model2D::Model2D() : vertices(), edges() 
 {
 	
 }
 
-Model2D::Model2D(const Matrix<double>& Vertices, const Matrix<int>& Edges) : vertices(Vertices), edges(Edges), comulative_at(Identity()), initial_vertices(Vertices)
+Model2D::Model2D(const Matrix<double>& vertices, const Matrix<int>& edges) : vertices(vertices), edges(edges)
 {
     
 }
 
-Model2D::Model2D(const std::string& input_filename, const std::string& output_filename)
-{
-
-}
-
-Matrix<double> Model2D::GetVertices()
+const Matrix<double>& Model2D::GetVertices() const
 {
 	return vertices;
 }
 
-Matrix<int> Model2D::GetEdges()
+const Matrix<int>& Model2D::GetEdges() const
 {
 	return edges;
 }
 
-double Model2D::GetVertexX(int p)
+std::pair<double, double> Model2D::GetVertex(const int index) const
 {
-	return 0;
+	const double p = vertices[2][index];
+	return { vertices[0][index] / p, vertices[1][index] / p };
 }
 
-double Model2D::GetVertexY(int p)
+Model2D& Model2D::Apply(const Matrix<double>& T)
 {
-	return 0;
-}
-
-void Model2D::Apply(const Matrix<double>& T)
-{
-
+	vertices = T * vertices;
+	return *this;
 }

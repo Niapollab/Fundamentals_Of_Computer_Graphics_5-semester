@@ -20,8 +20,13 @@ Matrix<double> Identity()
 	};
 }
 
-Matrix<double> Rotation(double c, double s)
+Matrix<double> Rotation(double triang_leg1, double triang_leg2)
 {
+	double hypotenuse = sqrt(triang_leg1 * triang_leg1 + triang_leg2 * triang_leg2);
+	
+	double c = triang_leg1 / hypotenuse;
+	double s = triang_leg2 / hypotenuse;
+
 	return
 	{
 		{c, s, 0},
