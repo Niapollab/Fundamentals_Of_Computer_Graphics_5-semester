@@ -14,7 +14,7 @@
 LRESULT _stdcall WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);						// прототип оконной процедуры
 int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)		// основна€ процедура
 {
-	// ѕерва€ составл€юща€ часть основной процедуры - создание окна: сначала описываетс€ оконный класс wc, затем создаЄтс€ окно hWnd
+		// ѕерва€ составл€юща€ часть основной процедуры - создание окна: сначала описываетс€ оконный класс wc, затем создаЄтс€ окно hWnd
 	WNDCLASS wc;
 	wc.style = CS_OWNDC;
 	wc.lpfnWndProc = WndProc;						// им€ оконной процедуры, закрепленной за данным классом
@@ -134,9 +134,9 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 					auto edge_point_end = model.GetVertex(1);
 
 					model.Apply(Translation(-edge_point_start.first, -edge_point_start.second))
-						.Apply(Rotation(edge_point_end.first - edge_point_start.first, edge_point_end.second - edge_point_start.second))
-						.Apply(ReflectOY())
-						.Apply(Rotation(edge_point_end.first - edge_point_start.first, edge_point_start.second - edge_point_end.second))
+						.Apply(Rotation2D(edge_point_end.first - edge_point_start.first, edge_point_end.second - edge_point_start.second))
+						.Apply(Reflect2DOY())
+						.Apply(Rotation2D(edge_point_end.first - edge_point_start.first, edge_point_start.second - edge_point_end.second))
 						.Apply(Translation(edge_point_start.first, edge_point_start.second));
 					
 					break;
@@ -146,7 +146,7 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 					auto point = model.GetVertex(0);
 
 					model.Apply(Translation(-point.first, -point.second))
-						.Apply(Rotation(M_PI / 4))
+						.Apply(Rotation2D(M_PI / 4))
 						.Apply(Translation(point.first, point.second));
 
 					break;
@@ -156,7 +156,7 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 					auto point = model.GetVertex(0);
 
 					model.Apply(Translation(-point.first, -point.second))
-						.Apply(Rotation(-M_PI / 4))
+						.Apply(Rotation2D(-M_PI / 4))
 						.Apply(Translation(point.first, point.second));
 
 					break;

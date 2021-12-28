@@ -59,9 +59,6 @@
     <ClInclude Include="IModelReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IModelWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FileModelReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>

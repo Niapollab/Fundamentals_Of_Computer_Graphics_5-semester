@@ -76,7 +76,6 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="FileModelReader.h" />
     <ClInclude Include="IModelReader.h" />
-    <ClInclude Include="IModelWriter.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MatrixRow.h" />
     <ClInclude Include="Model2D.h" />

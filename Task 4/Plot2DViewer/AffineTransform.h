@@ -4,19 +4,35 @@
 
 Matrix<double> Translation(double x, double y);
 
-Matrix<double> Identity();
+Matrix<double> Translation(double x, double y, double z);
 
-Matrix<double> Rotation(double c, double s);
+Matrix<double> Identity(int length);
 
-Matrix<double> Rotation(double rad);
+Matrix<double> Rotation2D(double c, double s);
+
+Matrix<double> Rotation2D(double rad);
+
+Matrix<double> Rotation3DByX(double triang_leg1, double triang_leg2);
+
+Matrix<double> Rotation3DByX(double rad);
+
+Matrix<double> Rotation3DByY(double triang_leg1, double triang_leg2);
+
+Matrix<double> Rotation3DByY(double rad);
+
+Matrix<double> Rotation3DByZ(double triang_leg1, double triang_leg2);
+
+Matrix<double> Rotation3DByZ(double rad);
 
 Matrix<double> Scaling(double kx, double ky);
 
-Matrix<double> ReflectOX();
+Matrix<double> Scaling(double kx, double ky, double kz);
 
-Matrix<double> ReflectOY();
+Matrix<double> Reflect2DOX();
 
-Matrix<double> ReflectAll();
+Matrix<double> Reflect2DOY();
+
+Matrix<double> Reflect2DAll();
 
 // Здесь требуется реализовать функции, возвращающие матрицы базовых АП:
 // Identity() - тождественное АП;
