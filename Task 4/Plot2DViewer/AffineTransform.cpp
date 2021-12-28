@@ -29,6 +29,8 @@ Matrix<double> Identity(int length)
 	Matrix<double> result(length, length);
 	for (int i = 0; i < length; ++i)
 		result[i][i] = 1;
+
+	return result;
 }
 
 std::pair<double, double> FindCSPair(double triang_leg1, double triang_leg2)
