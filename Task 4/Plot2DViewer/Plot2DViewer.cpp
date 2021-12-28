@@ -133,11 +133,11 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 					auto edge_point_start = model.GetVertex(0);
 					auto edge_point_end = model.GetVertex(1);
 
-					model.Apply(Translation(-edge_point_start.first, -edge_point_start.second))
-						.Apply(Rotation2D(edge_point_end.first - edge_point_start.first, edge_point_end.second - edge_point_start.second))
+					model.Apply(Translation(-edge_point_start.x(), -edge_point_start.y()))
+						.Apply(Rotation2D(edge_point_end.x() - edge_point_start.x(), edge_point_end.y() - edge_point_start.y()))
 						.Apply(Reflect2DOY())
-						.Apply(Rotation2D(edge_point_end.first - edge_point_start.first, edge_point_start.second - edge_point_end.second))
-						.Apply(Translation(edge_point_start.first, edge_point_start.second));
+						.Apply(Rotation2D(edge_point_end.x() - edge_point_start.x(), edge_point_start.y() - edge_point_end.y()))
+						.Apply(Translation(edge_point_start.x(), edge_point_start.y()));
 					
 					break;
 				}
@@ -145,9 +145,9 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 				{
 					auto point = model.GetVertex(0);
 
-					model.Apply(Translation(-point.first, -point.second))
+					model.Apply(Translation(-point.x(), -point.y()))
 						.Apply(Rotation2D(M_PI / 4))
-						.Apply(Translation(point.first, point.second));
+						.Apply(Translation(point.x(), point.y()));
 
 					break;
 				}
@@ -155,9 +155,9 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 				{
 					auto point = model.GetVertex(0);
 
-					model.Apply(Translation(-point.first, -point.second))
+					model.Apply(Translation(-point.x(), -point.y()))
 						.Apply(Rotation2D(-M_PI / 4))
-						.Apply(Translation(point.first, point.second));
+						.Apply(Translation(point.x(), point.y()));
 
 					break;
 				}

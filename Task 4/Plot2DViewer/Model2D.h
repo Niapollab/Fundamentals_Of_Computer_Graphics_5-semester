@@ -3,6 +3,7 @@
 #include <fstream>
 #include "Matrix.h"
 #include "AffineTransform.h"
+#include "Point2D.h"
 
 class Model2D
 {
@@ -16,6 +17,6 @@ public:
 
 	const Matrix<double>& GetVertices() const;
 	const Matrix<int>& GetEdges() const;
-	std::pair<double, double> GetVertex(const int index) const;
+	Point2D<double> GetVertex(const int index) const;
 	Model2D& Apply(const Matrix<double>& T);
 };

@@ -36,8 +36,9 @@ void Scene2D::Render()
 			{
 				auto fpoint = model.GetVertex(i);
 				auto spoint = model.GetVertex(j);
-				MoveTo(fpoint.first, fpoint.second);
-				LineTo(spoint.first, spoint.second);
+				
+				MoveTo(fpoint.x(), fpoint.y());
+				LineTo(spoint.x(), spoint.y());
 			}
 		}
 	}

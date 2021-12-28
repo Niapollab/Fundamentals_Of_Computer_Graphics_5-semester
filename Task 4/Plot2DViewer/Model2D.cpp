@@ -20,7 +20,7 @@ const Matrix<int>& Model2D::GetEdges() const
 	return edges;
 }
 
-std::pair<double, double> Model2D::GetVertex(const int index) const
+Point2D<double> Model2D::GetVertex(const int index) const
 {
 	const double p = vertices[2][index];
 	return { vertices[0][index] / p, vertices[1][index] / p };
