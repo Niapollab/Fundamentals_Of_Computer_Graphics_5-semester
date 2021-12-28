@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include <istream>
-#include "IModelReader.h"
+#include "IModel2DReader.h"
+#include "IModel3DReader.h"
 
-class FileModelReader : public IModelReader
+class FileModelReader : public IModel2DReader, public IModel3DReader
 {
 private:
 	std::string filename;
@@ -19,4 +20,5 @@ public:
 	virtual ~FileModelReader();
 
 	virtual Model2D Read2DModel();
+	virtual Model3D Read3DModel();
 };

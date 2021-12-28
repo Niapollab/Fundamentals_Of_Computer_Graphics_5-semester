@@ -33,6 +33,9 @@
     <ClCompile Include="FileModelReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h">
@@ -56,10 +59,16 @@
     <ClInclude Include="MatrixRow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IModelReader.h">
+    <ClInclude Include="IModel2DReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileModelReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IModel3DReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

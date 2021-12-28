@@ -32,6 +32,11 @@ Model2D FileModelReader::Read2DModel()
     return Model2D();
 }
 
+Model3D FileModelReader::Read3DModel()
+{
+    return Model3D();
+}
+
 std::vector<std::string> FileModelReader::ReadLines(std::istream& in)
 {
     std::vector<std::string> lines;
