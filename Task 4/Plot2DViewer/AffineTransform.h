@@ -1,10 +1,16 @@
 #pragma once
 #include <cmath>
 #include "Matrix.h"
+#include "Point2D.h"
+#include "Point3D.h"
 
 Matrix<double> Translation(double x, double y);
 
+Matrix<double> Translation(const Point2D<double>& point);
+
 Matrix<double> Translation(double x, double y, double z);
+
+Matrix<double> Translation(const Point3D<double>& point);
 
 Matrix<double> Identity(int length);
 

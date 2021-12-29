@@ -53,12 +53,15 @@ int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 // Все дальнейшие действия осуществляются посредством обращения к методам, реализованным в этом классе
 std::map<HWND, Scene2D*> windows;
 
-FileModelReader reader("elephant.txt");
-Model2D model = reader.Read2DModel();
+FileModelReader reader("cube.txt");
+Model3D model = reader.Read3DModel();
 
 LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// оконная процедура принимает и обрабатывает все сообщения, отправленные окну
 {
 	const char KEY_W = 0x57;
+	const char KEY_Z = 0x5A;
+	const char KEY_Y = 0x59;
+	const char KEY_X = 0x58;
 	const char KEY_Q = 0x51;
 	const char KEY_E = 0x45;
 
@@ -94,10 +97,10 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 			double wheelNow = GET_WHEEL_DELTA_WPARAM(wParam);
 
 			if (wheelNow > 0) {
-				model.Apply(Scaling(1.5, 1.5));
+				model.Apply(Scaling(1.5, 1.5, 1.5));
 			}
 			else {
-				model.Apply(Scaling(0.75, 0.75));
+				model.Apply(Scaling(0.75, 0.75, 0.75));
 			}
 
 			InvalidateRect(hWnd, nullptr, false);
@@ -108,55 +111,92 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 			{
 			case VK_UP:
 				{
-					model.Apply(Translation(0, 1));
+					model.Apply(Translation(0, 1, 0));
 					break;
 				}
 			case VK_DOWN:
 				{
-					model.Apply(Translation(0, -1));
+					model.Apply(Translation(0, -1, 0));
 					break;
 				}
 			case VK_LEFT:
 				{
-					model.Apply(Translation(-1, 0));
+					model.Apply(Translation(-1, 0, 0));
 					break;
 				}
 			case VK_RIGHT:
 				{
-					model.Apply(Translation(1, 0));
+					model.Apply(Translation(1, 0, 0));
 					break;
 				}
 			case KEY_W:
 				{
-					auto edge_point_start = model.GetVertex(0);
-					auto edge_point_end = model.GetVertex(1);
+					const int START_POINT_INDEX = 0;
+					const int END_POINT_INDEX = 1;
 
-					model.Apply(Translation(-edge_point_start.x(), -edge_point_start.y()))
-						.Apply(Rotation2D(edge_point_end.x() - edge_point_start.x(), edge_point_end.y() - edge_point_start.y()))
-						.Apply(Reflect2DOY())
-						.Apply(Rotation2D(edge_point_end.x() - edge_point_start.x(), edge_point_start.y() - edge_point_end.y()))
-						.Apply(Translation(edge_point_start.x(), edge_point_start.y()));
+					Point3D<double> point_backup = model.GetVertex(START_POINT_INDEX);
+
+					model.Apply(Translation(-point_backup.x(), -point_backup.y(), -point_backup.z()));
 					
+					double deltaXv1 = model.GetVertex(START_POINT_INDEX).x() - model.GetVertex(END_POINT_INDEX).x();
+					double deltaZv1 = model.GetVertex(START_POINT_INDEX).z() - model.GetVertex(END_POINT_INDEX).z();
+
+					model.Apply(Rotation3DByY(deltaXv1, deltaZv1));
+
+					double deltaXv2 = model.GetVertex(START_POINT_INDEX).x() - model.GetVertex(END_POINT_INDEX).x();
+					double deltaYv2 = model.GetVertex(START_POINT_INDEX).y() - model.GetVertex(END_POINT_INDEX).y();
+
+					model.Apply(Rotation3DByZ(deltaXv2, deltaYv2));
+
+					model.Apply(Rotation3DByX(M_PI / 8));
+
+					model.Apply(Rotation3DByZ(deltaXv2, -deltaYv2));
+					model.Apply(Rotation3DByY(deltaXv1, -deltaZv1));
+
+					model.Apply(Translation(point_backup));
+					break;
+				}
+			case KEY_Z:
+				{
+					model.Apply(Rotation3DByZ(M_PI / 8));
+					break;
+				}
+			case KEY_Y:
+				{
+					model.Apply(Rotation3DByY(M_PI / 8));
+					break;
+				}
+			case KEY_X:
+				{
+					model.Apply(Rotation3DByX(M_PI / 8));
 					break;
 				}
 			case KEY_Q:
 				{
-					auto point = model.GetVertex(0);
+					MatrixRow<int> facet = model.GetFacets()[0];
+					int start_point_index = facet[0];
 
-					model.Apply(Translation(-point.x(), -point.y()))
-						.Apply(Rotation2D(M_PI / 4))
-						.Apply(Translation(point.x(), point.y()));
+					Point3D<double> point_backup = model.GetVertex(start_point_index);
 
+					model.Apply(Translation(-point_backup.x(), -point_backup.y(), -point_backup.z()));
+
+					model.Apply(Scaling(1, 1, 3));
+
+					model.Apply(Translation(point_backup));
 					break;
 				}
 			case KEY_E:
 				{
-					auto point = model.GetVertex(0);
+					MatrixRow<int> facet = model.GetFacets()[0];
+					int start_point_index = facet[0];
 
-					model.Apply(Translation(-point.x(), -point.y()))
-						.Apply(Rotation2D(-M_PI / 4))
-						.Apply(Translation(point.x(), point.y()));
+					Point3D<double> point_backup = model.GetVertex(start_point_index);
 
+					model.Apply(Translation(-point_backup.x(), -point_backup.y(), -point_backup.z()));
+
+					model.Apply(Scaling(1, 1, 1.0 / 3.0));
+
+					model.Apply(Translation(point_backup));
 					break;
 				}
 			}

@@ -10,6 +10,11 @@ Matrix<double> Translation(double x, double y)
 	};
 }
 
+Matrix<double> Translation(const Point2D<double>& point)
+{
+	return Translation(point.x(), point.y());
+}
+
 Matrix<double> Translation(double x, double y, double z)
 {
 	return
@@ -19,6 +24,11 @@ Matrix<double> Translation(double x, double y, double z)
 		{0, 0, 1, z},
 		{0, 0, 0, 1}
 	};
+}
+
+Matrix<double> Translation(const Point3D<double>& point)
+{
+	return Translation(point.x(), point.y(), point.z());
 }
 
 Matrix<double> Identity(int length)
