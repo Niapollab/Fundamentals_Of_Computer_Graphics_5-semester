@@ -67,13 +67,13 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 	{
 	case WM_CREATE:
 	{
-		windows[hWnd] = new Scene2D(hWnd, X0, Y0, px, py, model);
+		windows[hWnd] = new Scene2D(hWnd, X0, Y0, px, py);
 		return 0;
 	}
 	case WM_PAINT:
 		{
 			scene->Clear();				// Вызов реализованного в классе Camera2D метода, отвечающего за очистку рабочей области окна hWnd
-			scene->Render();
+			scene->Render(model);
 			ReleaseDC(hWnd, scene->GetDC());
 			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
@@ -91,7 +91,6 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 		}
 	case WM_MOUSEWHEEL:
 		{
-			Model2D& model = scene->GetModel();
 			double wheelNow = GET_WHEEL_DELTA_WPARAM(wParam);
 
 			if (wheelNow > 0) {
@@ -105,7 +104,6 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 		}
 	case WM_KEYDOWN:
 		{
-			Model2D& model = scene->GetModel();
 			switch (wParam)
 			{
 			case VK_UP:

@@ -1,12 +1,7 @@
 #include "Scene2D.h"
 
-Scene2D::Scene2D(HWND window, double X0, double Y0, double px, double py, Model2D model) : Camera2D(window, X0, Y0, px, py), model(model)
+Scene2D::Scene2D(HWND window, double X0, double Y0, double px, double py) : Camera2D(window, X0, Y0, px, py)
 {
-}
-
-Model2D& Scene2D::GetModel()
-{
-	return model;
 }
 
 void Scene2D::Plot(Func func, bool axes)
@@ -23,7 +18,7 @@ void Scene2D::Plot(Func func, bool axes)
 	}
 }
 
-void Scene2D::Render()
+void Scene2D::Render(const Model2D& model)
 {
 	const Matrix<int>& edges = model.GetEdges();
 	const Matrix<double>& vertices = model.GetVertices();
@@ -42,4 +37,8 @@ void Scene2D::Render()
 			}
 		}
 	}
+}
+
+void Scene2D::Render(const Model3D& model)
+{
 }
