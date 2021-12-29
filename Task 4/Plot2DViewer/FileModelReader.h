@@ -12,8 +12,8 @@ private:
 	std::vector<std::string> ReadLines(std::istream& in);
 	template<class T>
 	std::vector<T> ReadVector(const std::string& line);
-	Matrix<double> ReadVertexes(const std::vector<std::string>& lines);
-	Matrix<int> ReadEdges(const std::vector<std::string>& lines);
+	Matrix<double> ReadVertexes(const std::vector<std::string>& lines, size_t vertex_rows_count);
+	Matrix<int> ReadConnections(const std::vector<std::string>& lines, size_t vertex_rows_count);
 
 public:
 	FileModelReader(const std::string& filename);

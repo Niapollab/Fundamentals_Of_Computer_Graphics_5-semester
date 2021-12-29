@@ -77,5 +77,8 @@
     <ClInclude Include="Point3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectionType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

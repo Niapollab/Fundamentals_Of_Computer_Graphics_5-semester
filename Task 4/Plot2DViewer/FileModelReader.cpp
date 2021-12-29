@@ -15,14 +15,16 @@ Model2D FileModelReader::Read2DModel()
     std::ifstream file(filename);
     if (file)
     {
+        const size_t VERTEX_ROWS_COUNT = 3;
+
         std::vector<std::string> lines = ReadLines(file);
         file.close();
 
-        Matrix<double> vertexes = ReadVertexes(lines);
+        Matrix<double> vertexes = ReadVertexes(lines, VERTEX_ROWS_COUNT);
         if (vertexes.get_rows_size() < 1)
             return Model2D();
 
-        Matrix<int> edges = ReadEdges(lines);
+        Matrix<int> edges = ReadConnections(lines, VERTEX_ROWS_COUNT);
         if (edges.get_rows_size() < 1)
             return Model2D();
         
@@ -34,6 +36,25 @@ Model2D FileModelReader::Read2DModel()
 
 Model3D FileModelReader::Read3DModel()
 {
+    std::ifstream file(filename);
+    if (file)
+    {
+        const size_t VERTEX_ROWS_COUNT = 4;
+
+        std::vector<std::string> lines = ReadLines(file);
+        file.close();
+
+        Matrix<double> vertexes = ReadVertexes(lines, VERTEX_ROWS_COUNT);
+        if (vertexes.get_rows_size() < 1)
+            return Model3D();
+
+        Matrix<int> facets = ReadConnections(lines, VERTEX_ROWS_COUNT);
+        if (facets.get_rows_size() < 1)
+            return Model3D();
+
+        return Model3D(vertexes, facets);
+    }
+
     return Model3D();
 }
 
@@ -75,14 +96,12 @@ bool HasSameLength(const std::vector<std::vector<T>>& vec)
     return true;
 }
 
-Matrix<double> FileModelReader::ReadVertexes(const std::vector<std::string>& lines)
+Matrix<double> FileModelReader::ReadVertexes(const std::vector<std::string>& lines, size_t vertex_rows_count)
 {
-    const size_t VERTEX_ROWS_COUNT = 3;
-
-    if (lines.size() < VERTEX_ROWS_COUNT)
+    if (lines.size() < vertex_rows_count)
         return Matrix<double>();
 
-    std::vector<std::vector<double>> rows(VERTEX_ROWS_COUNT);
+    std::vector<std::vector<double>> rows(vertex_rows_count);
     for (size_t i = 0; i < rows.size(); ++i)
         rows[i] = ReadVector<double>(lines[i]);
 
@@ -97,15 +116,13 @@ Matrix<double> FileModelReader::ReadVertexes(const std::vector<std::string>& lin
     return matrix;
 }
 
-Matrix<int> FileModelReader::ReadEdges(const std::vector<std::string>& lines)
+Matrix<int> FileModelReader::ReadConnections(const std::vector<std::string>& lines, size_t vertex_rows_count)
 {
-    const size_t VERTEX_ROWS_COUNT = 3;
-
-    if (lines.size() <= VERTEX_ROWS_COUNT)
+    if (lines.size() <= vertex_rows_count)
         return Matrix<int>();
     
     std::vector<std::vector<int>> rows;
-    for (size_t i = 3; i < lines.size(); ++i)
+    for (size_t i = vertex_rows_count; i < lines.size(); ++i)
         rows.push_back(ReadVector<int>(lines[i]));
 
     if (!HasSameLength(rows))

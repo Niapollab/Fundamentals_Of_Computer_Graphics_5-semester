@@ -84,6 +84,7 @@
     <ClInclude Include="Model3D.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="Point3D.h" />
+    <ClInclude Include="ProjectionType.h" />
     <ClInclude Include="Scene2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

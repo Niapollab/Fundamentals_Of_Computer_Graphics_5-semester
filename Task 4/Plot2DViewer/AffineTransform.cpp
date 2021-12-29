@@ -149,3 +149,36 @@ Matrix<double> Reflect2DAll()
 {
 	return Scaling(-1, -1);
 }
+
+Matrix<double> PerspectiveProjectionXOY(double distance)
+{
+	return
+	{
+		{1, 0, 0, 0},
+		{0, 1, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, -1 / distance, 1}
+	};
+}
+
+Matrix<double> PerspectiveProjectionZOX(double distance)
+{
+	return
+	{
+		{1, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 1, 0},
+		{0, -1 / distance, 0, 1}
+	};
+}
+
+Matrix<double> PerspectiveProjectionYOZ(double distance)
+{
+	return
+	{
+		{0, 0, 0, 0},
+		{0, 1, 0, 0},
+		{0, 0, 1, 0},
+		{-1 / distance, 0, 0, 1}
+	};
+}

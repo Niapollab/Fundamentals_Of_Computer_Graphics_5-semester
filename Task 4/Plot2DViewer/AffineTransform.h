@@ -34,6 +34,12 @@ Matrix<double> Reflect2DOY();
 
 Matrix<double> Reflect2DAll();
 
+Matrix<double> PerspectiveProjectionXOY(double distance);
+
+Matrix<double> PerspectiveProjectionZOX(double distance);
+
+Matrix<double> PerspectiveProjectionYOZ(double distance);
+
 // Здесь требуется реализовать функции, возвращающие матрицы базовых АП:
 // Identity() - тождественное АП;
 // Rotation(t) - поворот на угол t;
