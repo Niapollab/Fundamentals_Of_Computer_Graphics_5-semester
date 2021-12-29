@@ -5,6 +5,7 @@
 #include "Data.h"
 #include "Scene2D.h"
 #include "FileModelReader.h"
+#include "ObjFileReader.h"
 
 #define moveCoeff	0.1
 #define	scalCoeff	0.05
@@ -53,7 +54,7 @@ int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 // Все дальнейшие действия осуществляются посредством обращения к методам, реализованным в этом классе
 std::map<HWND, Scene2D*> windows;
 
-FileModelReader reader("cube.txt");
+ObjFileReader reader("cube.obj");
 Model3D model = reader.Read3DModel();
 
 LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// оконная процедура принимает и обрабатывает все сообщения, отправленные окну

@@ -68,6 +68,7 @@
     <ClCompile Include="FileModelReader.cpp" />
     <ClCompile Include="Model2D.cpp" />
     <ClCompile Include="Model3D.cpp" />
+    <ClCompile Include="ObjFileReader.cpp" />
     <ClCompile Include="Plot2DViewer.cpp" />
     <ClCompile Include="Scene2D.cpp" />
   </ItemGroup>
@@ -82,6 +83,7 @@
     <ClInclude Include="MatrixRow.h" />
     <ClInclude Include="Model2D.h" />
     <ClInclude Include="Model3D.h" />
+    <ClInclude Include="ObjFileReader.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="Point3D.h" />
     <ClInclude Include="ProjectionType.h" />
