@@ -77,7 +77,7 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 	case WM_PAINT:
 		{
 			scene->Clear();				// Вызов реализованного в классе Camera2D метода, отвечающего за очистку рабочей области окна hWnd
-			scene->Render(model);
+			scene->Render(model, ProjectionType::YOZ);
 			ReleaseDC(hWnd, scene->GetDC());
 			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
@@ -174,28 +174,54 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 				}
 			case KEY_Q:
 				{
-					MatrixRow<int> facet = model.GetFacets()[0];
-					int start_point_index = facet[0];
+					const int START_POINT_INDEX = 0;
+					const int END_POINT_INDEX = 1;
 
-					Point3D<double> point_backup = model.GetVertex(start_point_index);
+					Point3D<double> point_backup = model.GetVertex(START_POINT_INDEX);
 
 					model.Apply(Translation(-point_backup.x(), -point_backup.y(), -point_backup.z()));
 
-					model.Apply(Scaling(1, 1, 3));
+					double deltaXv1 = model.GetVertex(START_POINT_INDEX).x() - model.GetVertex(END_POINT_INDEX).x();
+					double deltaZv1 = model.GetVertex(START_POINT_INDEX).z() - model.GetVertex(END_POINT_INDEX).z();
+
+					model.Apply(Rotation3DByY(deltaXv1, deltaZv1));
+
+					double deltaXv2 = model.GetVertex(START_POINT_INDEX).x() - model.GetVertex(END_POINT_INDEX).x();
+					double deltaYv2 = model.GetVertex(START_POINT_INDEX).y() - model.GetVertex(END_POINT_INDEX).y();
+
+					model.Apply(Rotation3DByZ(deltaXv2, -deltaYv2));
+
+					model.Apply(Scaling(1.1, 1, 1));
+
+					model.Apply(Rotation3DByZ(deltaXv2, deltaYv2));
+					model.Apply(Rotation3DByY(deltaXv1, -deltaZv1));
 
 					model.Apply(Translation(point_backup));
 					break;
 				}
 			case KEY_E:
 				{
-					MatrixRow<int> facet = model.GetFacets()[0];
-					int start_point_index = facet[0];
+					const int START_POINT_INDEX = 0;
+					const int END_POINT_INDEX = 1;
 
-					Point3D<double> point_backup = model.GetVertex(start_point_index);
+					Point3D<double> point_backup = model.GetVertex(START_POINT_INDEX);
 
 					model.Apply(Translation(-point_backup.x(), -point_backup.y(), -point_backup.z()));
 
-					model.Apply(Scaling(1, 1, 1.0 / 3.0));
+					double deltaXv1 = model.GetVertex(START_POINT_INDEX).x() - model.GetVertex(END_POINT_INDEX).x();
+					double deltaZv1 = model.GetVertex(START_POINT_INDEX).z() - model.GetVertex(END_POINT_INDEX).z();
+
+					model.Apply(Rotation3DByY(deltaXv1, deltaZv1));
+
+					double deltaXv2 = model.GetVertex(START_POINT_INDEX).x() - model.GetVertex(END_POINT_INDEX).x();
+					double deltaYv2 = model.GetVertex(START_POINT_INDEX).y() - model.GetVertex(END_POINT_INDEX).y();
+
+					model.Apply(Rotation3DByZ(deltaXv2, -deltaYv2));
+
+					model.Apply(Scaling(1 / 1.1, 1, 1));
+
+					model.Apply(Rotation3DByZ(deltaXv2, deltaYv2));
+					model.Apply(Rotation3DByY(deltaXv1, -deltaZv1));
 
 					model.Apply(Translation(point_backup));
 					break;
